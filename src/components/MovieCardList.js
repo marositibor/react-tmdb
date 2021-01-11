@@ -4,14 +4,8 @@ import Grid from "@material-ui/core/Grid";
 import MovieCard from "./MovieCard";
 
 const useStyles = makeStyles((theme) => ({
-  root: {
-    flexGrow: 1,
-  },
-  menuButton: {
-    marginRight: theme.spacing(2),
-  },
-  title: {
-    flexGrow: 1,
+  item: {
+    flexGrow: 0,
   },
 }));
 
@@ -20,9 +14,9 @@ export default function MovieCardList({ movieNodeList }) {
 
   return (
     <React.Fragment>
-      <Grid container className={classes.root} spacing={2}>
+      <Grid container spacing={2} justify="center">
         {movieNodeList.map((item) => (
-          <Grid item xs={1}>
+          <Grid item xs={6} sm={4} md={3} lg={2} className={classes.item}>
             <MovieCard movieNode={item.node} />
           </Grid>
         ))}

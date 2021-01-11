@@ -165,11 +165,11 @@ export default function MovieList({ ...props }) {
             }
           }]`)
   );
-  console.log(results);
+  function handleSearch() {}
 
   return (
     <React.Fragment>
-      <MovieSearchBar></MovieSearchBar>
+      <MovieSearchBar onSearch={handleSearch}></MovieSearchBar>
       <MovieCardList movieNodeList={results}></MovieCardList>
     </React.Fragment>
   );
