@@ -1,30 +1,54 @@
-import useFetch from "./useFetch";
+import React from "react";
 
 export default function useSearch(defaultQuery) {
+  const [query, setQuery] = React.useState(defaultQuery);
+  const [response, setResponse] = React.useState(null);
+  const [error, setError] = React.useState(null);
+  const [isLoading, setIsLoading] = React.useState(false);
+
   const createBody = (query) => {
     return JSON.stringify({
       query: `query SearchMovies {  
                 searchMovies(query: "${query}") {
                         id
                         name 
-                        releaseDate  
+                        releaseDate
+                        poster{
+                          medium
+                        }  
                     }}`,
       operationName: "SearchMovies",
     });
   };
 
-  const defaultBody = createBody(defaultQuery);
+  React.useEffect(() => {
+    const body = createBody(query);
 
-  const { response, error, isLoading } = useFetch(
-    "https://tmdb.sandbox.zoosh.ie/dev/graphql",
-    {
+    const url = "https://tmdb.sandbox.zoosh.ie/dev/graphql";
+    const options = {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: defaultBody,
-    }
-  );
+      body: body,
+    };
 
-  return { response, error, isLoading };
+    const fetchData = async () => {
+      setIsLoading(true);
+      try {
+        const res = await fetch(url, options);
+        const json = await res.json();
+        setResponse(json);
+        setIsLoading(false);
+      } catch (error) {
+        setError(error);
+      }
+    };
+    fetchData();
+  }, [query]);
+
+  function search(query) {
+    setQuery(query);
+  }
+  return { response, error, isLoading, search };
 }

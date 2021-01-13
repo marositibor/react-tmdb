@@ -3,6 +3,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import MovieCardList from "./MovieCardList";
 import MovieSearchBar from "./MovieSearchBar";
+import useSearch from "../hooks/useSearch";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -18,6 +19,9 @@ const useStyles = makeStyles((theme) => ({
 
 export default function MovieList({ ...props }) {
   const classes = useStyles();
+
+  const { response, error, isLoading, search } = useSearch("Star Wars");
+
   const [results, setResults] = React.useState(
     JSON.parse(`[
         {
@@ -165,12 +169,22 @@ export default function MovieList({ ...props }) {
             }
           }]`)
   );
-  function handleSearch() {}
+
+  if (response) {
+    console.log(response.data.searchMovies);
+  }
+  function handleSearch(query) {
+    search(query);
+  }
 
   return (
     <React.Fragment>
       <MovieSearchBar onSearch={handleSearch}></MovieSearchBar>
-      <MovieCardList movieNodeList={results}></MovieCardList>
+      {response && (
+        <MovieCardList
+          movieNodeList={response.data.searchMovies}
+        ></MovieCardList>
+      )}
     </React.Fragment>
   );
 }

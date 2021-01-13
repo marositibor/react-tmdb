@@ -22,14 +22,16 @@ export default function MovieCard({ movieNode }) {
 
   return (
     <Card className={classes.root}>
-      <CardMedia
-        className={classes.media}
-        image={movieNode.poster}
-        title="Poster of movie"
-      />
+      {movieNode.poster && (
+        <CardMedia
+          className={classes.media}
+          image={movieNode.poster.medium}
+          title="Poster of movie"
+        />
+      )}
       <CardContent>
         <Typography gutterBottom variant="h5" component="h2">
-          {movieNode.originalTitle}
+          {movieNode.name}
         </Typography>
         <Typography variant="body2" color="textSecondary" component="p">
           Text Secondary

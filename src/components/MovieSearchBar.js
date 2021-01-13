@@ -8,7 +8,6 @@ import {
   TextField,
   Typography,
 } from "@material-ui/core";
-import useSearch from "../hooks/useSearch";
 
 const useStyles = makeStyles((theme) => ({
   margin: {
@@ -24,10 +23,12 @@ const useStyles = makeStyles((theme) => ({
 export default function MovieSearchBar({ onSearch }) {
   const classes = useStyles();
   const [query, setQuery] = React.useState("Star Wars");
-  const { response, error, isLoading } = useSearch(query);
 
   function handleChange(e) {
     setQuery(e.target.value);
+  }
+  function handleClick() {
+    onSearch(query);
   }
 
   return (
@@ -49,7 +50,7 @@ export default function MovieSearchBar({ onSearch }) {
             ),
           }}
         />
-        <Button variant="contained" color="primary">
+        <Button variant="contained" color="primary" onClick={handleClick}>
           Search
         </Button>
       </Grid>
