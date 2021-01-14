@@ -4,8 +4,17 @@ import Grid from "@material-ui/core/Grid";
 import MovieCard from "./MovieCard";
 
 const useStyles = makeStyles((theme) => ({
+  container: {
+    flexWrap: "nowrap",
+    flexDirection: "column",
+    alignItems: "center",
+  },
   item: {
     flexGrow: 0,
+    flexShrink: 0,
+    padding: 10,
+    maxWidth: 900,
+    width: "100%",
   },
 }));
 
@@ -14,10 +23,16 @@ export default function MovieCardList({ movieNodeList }) {
 
   return (
     <React.Fragment>
-      <Grid container spacing={2} justify="center">
-        {movieNodeList.map((item) => (
-          <Grid item xs={6} sm={4} md={3} lg={2} className={classes.item}>
-            <MovieCard movieNode={item} />
+      <Grid container justify="center" className={classes.container}>
+        {movieNodeList.map((movie) => (
+          <Grid item xs={12} className={classes.item}>
+            <MovieCard
+              key={movie.id}
+              posterUrl={movie.poster ? movie.poster.small : null}
+              title={movie.name}
+              releaseDate={new Date(movie.releaseDate).toLocaleDateString()}
+              description={movie.overview}
+            />
           </Grid>
         ))}
       </Grid>

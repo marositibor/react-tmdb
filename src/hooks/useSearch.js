@@ -14,8 +14,9 @@ export default function useSearch(defaultQuery) {
                         name 
                         releaseDate
                         poster{
-                          medium
+                          small
                         }  
+                        overview
                     }}`,
       operationName: "SearchMovies",
     });
@@ -47,8 +48,11 @@ export default function useSearch(defaultQuery) {
     fetchData();
   }, [query]);
 
-  function search(query) {
-    setQuery(query);
+  async function search(newQuery) {
+    if (newQuery !== query) {
+      await setResponse(undefined);
+      await setQuery(newQuery);
+    }
   }
   return { response, error, isLoading, search };
 }

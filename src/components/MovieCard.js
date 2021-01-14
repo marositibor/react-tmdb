@@ -6,45 +6,61 @@ import CardContent from "@material-ui/core/CardContent";
 import CardMedia from "@material-ui/core/CardMedia";
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
+import useWiki from "../hooks/useWiki";
+import MovieIcon from "@material-ui/icons/Movie";
 
 const useStyles = makeStyles({
   root: {
-    height: 500,
+    height: 150,
+    display: "flex",
+    flexDirection: "row",
   },
   media: {
-    height: 278,
+    height: 150,
     backgroundPositionY: 0,
+    width: 100,
+    flexShrink: 0,
   },
 });
 
-export default function MovieCard({ movieNode }) {
+export default function MovieCard({
+  posterUrl,
+  title,
+  releaseDate,
+  description,
+}) {
   const classes = useStyles();
-
   return (
-    <Card className={classes.root}>
-      {movieNode.poster && (
+    <Card className={classes.root} elevation={3}>
+      {posterUrl ? (
         <CardMedia
           className={classes.media}
-          image={movieNode.poster.medium}
+          image={posterUrl}
           title="Poster of movie"
+        />
+      ) : (
+        <MovieIcon
+          className={classes.media}
+          title="No movie poster"
+          fontSize="large"
+          color="primary"
         />
       )}
       <CardContent>
-        <Typography gutterBottom variant="h5" component="h2">
-          {movieNode.name}
+        <Typography gutterBottom variant="h6" component="h2">
+          {title}
         </Typography>
-        <Typography variant="body2" color="textSecondary" component="p">
-          Text Secondary
+        <Typography variant="subtitle1" color="textSecondary" component="p">
+          Release date: {releaseDate}
+        </Typography>
+        <Typography variant="body2" component="p">
+          {description}
         </Typography>
       </CardContent>
-      <CardActions>
-        <Button size="small" color="primary">
-          Wikipedia
-        </Button>
-        <Button size="small" color="primary">
-          IMDb
-        </Button>
-      </CardActions>
     </Card>
   );
+}
+
+function MovieCardDetails({ name }) {
+  const { response, error, isLoading } = useWiki(name);
 }

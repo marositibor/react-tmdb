@@ -1,4 +1,3 @@
-import "./App.css";
 import Bar from "./components/Bar";
 import MovieList from "./components/MovieList";
 
