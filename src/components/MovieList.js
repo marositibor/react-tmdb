@@ -1,13 +1,14 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import { CircularProgress } from "@material-ui/core";
+import { Box, CircularProgress } from "@material-ui/core";
 import MovieCardList from "./MovieCardList";
 import MovieSearchBar from "./MovieSearchBar";
 import useSearch from "../hooks/useSearch";
 
 const useStyles = makeStyles((theme) => ({
-  root: {
-    textAlign: "center",
+  box: {
+    display: "flex",
+    justifyContent: "center",
   },
 }));
 
@@ -24,14 +25,18 @@ export default function MovieList({ ...props }) {
   }
 
   return (
-    <React.Fragment className={classes.root}>
+    <React.Fragment>
       <MovieSearchBar onSearch={handleSearch}></MovieSearchBar>
       {response && (
         <MovieCardList
           movieNodeList={response.data.searchMovies}
         ></MovieCardList>
       )}
-      {isLoading && <CircularProgress />}
+      {isLoading && (
+        <Box className={classes.box}>
+          <CircularProgress />
+        </Box>
+      )}
     </React.Fragment>
   );
 }

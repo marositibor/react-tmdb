@@ -16,7 +16,7 @@ export default function useSearch(defaultQuery) {
                         poster{
                           small
                         }  
-                        overview
+                        score
                     }}`,
       operationName: "SearchMovies",
     });

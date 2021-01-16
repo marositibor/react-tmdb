@@ -28,7 +28,14 @@ export default function MovieSearchBar({ onSearch }) {
     setQuery(e.target.value);
   }
   function handleClick() {
-    onSearch(query);
+    if (query.length > 0) {
+      onSearch(query);
+    }
+  }
+  function handleKeyPress(e) {
+    if (e.key === "Enter") {
+      handleClick();
+    }
   }
 
   return (
@@ -42,6 +49,7 @@ export default function MovieSearchBar({ onSearch }) {
           placeholder="e.g.: Star Wars"
           value={query}
           onChange={handleChange}
+          onKeyPress={handleKeyPress}
           InputProps={{
             startAdornment: (
               <InputAdornment position="start">
