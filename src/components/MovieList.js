@@ -37,6 +37,7 @@ export default function MovieList({ ...props }) {
           <CircularProgress />
         </Box>
       )}
+      {error && "Error connectiong to The Movie Database"}
     </React.Fragment>
   );
 }

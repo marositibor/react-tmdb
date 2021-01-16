@@ -37,5 +37,8 @@ export default function useSearch(title) {
     fetchData();
   }, [query]);
 
-  return { response, error, isLoading };
+  function queryAgain(newQuery) {
+    setQuery(newQuery);
+  }
+  return { response, error, isLoading, queryAgain };
 }

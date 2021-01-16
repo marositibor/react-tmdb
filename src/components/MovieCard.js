@@ -5,7 +5,6 @@ import CardContent from "@material-ui/core/CardContent";
 import CardMedia from "@material-ui/core/CardMedia";
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
-import useWiki from "../hooks/useWiki";
 import MovieIcon from "@material-ui/icons/Movie";
 import { Box, Collapse } from "@material-ui/core";
 import UserScore from "./UserScore";
