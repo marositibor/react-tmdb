@@ -10,6 +10,9 @@ const useStyles = makeStyles({
   text: {
     margin: 7,
   },
+  center: {
+    textAlign: "center",
+  },
 });
 
 export default function MovieDetails({ name, movieId, onSimilar }) {
@@ -17,9 +20,13 @@ export default function MovieDetails({ name, movieId, onSimilar }) {
   const { response, error, isLoading } = useWiki(name);
   return (
     <Box>
-      <Box>
-        {isLoading && <CircularProgress />}
-        {response && (
+      {isLoading && (
+        <Box className={classes.center}>
+          <CircularProgress />
+        </Box>
+      )}
+      {response && (
+        <Box>
           <React.Fragment>
             {Object.keys(response.query.pages)[0] === "-1" ? (
               <Typography variant="body1" className={classes.text}>
@@ -57,34 +64,34 @@ export default function MovieDetails({ name, movieId, onSimilar }) {
               </React.Fragment>
             )}
           </React.Fragment>
-        )}
-        {error && (
-          <Box>
-            <Typography variant="body1" className={classes.text}>
-              Could not connect to Wikipedia.
-            </Typography>
-          </Box>
-        )}
-        <Button
-          className={classes.button}
-          href={"https://www.themoviedb.org/movie/" + movieId}
-          target={"_blank"}
-          color={"primary"}
-          variant="outlined"
-        >
-          TMDB
-        </Button>
-        <Button
-          className={classes.button}
-          color="secondary"
-          variant="outlined"
-          onClick={() => {
-            onSimilar(movieId);
-          }}
-        >
-          Related
-        </Button>
-      </Box>
+        </Box>
+      )}
+      {error && (
+        <Box>
+          <Typography variant="body1" className={classes.text}>
+            Could not connect to Wikipedia.
+          </Typography>
+        </Box>
+      )}
+      <Button
+        className={classes.button}
+        href={"https://www.themoviedb.org/movie/" + movieId}
+        target={"_blank"}
+        color={"primary"}
+        variant="outlined"
+      >
+        TMDB
+      </Button>
+      <Button
+        className={classes.button}
+        color="secondary"
+        variant="outlined"
+        onClick={() => {
+          onSimilar(movieId);
+        }}
+      >
+        Related
+      </Button>
     </Box>
   );
 }
