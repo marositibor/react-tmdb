@@ -43,7 +43,6 @@ export default function useSimilar() {
         const json = await res.json();
         setResponse(json);
         setIsLoading(false);
-        console.log(json);
       } catch (error) {
         setError(error);
       }
