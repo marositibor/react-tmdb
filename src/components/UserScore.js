@@ -9,6 +9,7 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: "column",
     alignItems: "center",
     position: "relative",
+    minWidth: 72,
   },
   wheel: {},
   score: {

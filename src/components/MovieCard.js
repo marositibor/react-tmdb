@@ -14,12 +14,12 @@ const useStyles = makeStyles({
   root: {
     height: "auto",
     display: "flex",
-    flexDirection: "row",
+    flexDirection: "column",
   },
   media: {
-    height: 150,
+    height: 170,
     backgroundPositionY: 0,
-    width: 100,
+    width: 110,
     flexShrink: 0,
   },
   content: {
@@ -35,53 +35,74 @@ const useStyles = makeStyles({
     alignItems: "center",
     flexGrow: 1,
   },
+  title: {
+    width: "fit-content",
+  },
 });
 
-export default function MovieCard({ posterUrl, title, releaseDate, score }) {
+export default function MovieCard({
+  posterUrl,
+  title,
+  releaseDate,
+  score,
+  id,
+  onSimilar,
+}) {
   const classes = useStyles();
   const [expanded, setExpanded] = React.useState(false);
   return (
     <Card className={classes.root} elevation={3}>
-      {posterUrl ? (
-        <CardMedia
-          className={classes.media}
-          image={posterUrl}
-          title="Poster of movie"
-        />
-      ) : (
-        <MovieIcon
-          className={classes.media}
-          title="No movie poster"
-          fontSize="large"
-          color="primary"
-        />
-      )}
-      <CardContent className={classes.content}>
-        <Box className={classes.row}>
-          <Box>
-            <Button
-              color="primary"
-              size="large"
-              onClick={() => {
-                setExpanded(!expanded);
-              }}
-            >
-              <Typography variant="h6" component="h2">
-                {title}
-              </Typography>
-            </Button>
-            <Typography variant="subtitle1" color="textSecondary" component="p">
-              Release date: {releaseDate}
+      <Box className={classes.row}>
+        {posterUrl ? (
+          <CardMedia
+            className={classes.media}
+            image={posterUrl}
+            title="Poster of movie"
+          />
+        ) : (
+          <MovieIcon
+            className={classes.media}
+            title="No movie poster"
+            fontSize="large"
+            color="primary"
+          />
+        )}
+        <CardContent className={classes.content}>
+          <Button
+            className={classes.title}
+            color="primary"
+            size="large"
+            onClick={() => {
+              setExpanded(!expanded);
+            }}
+          >
+            <Typography variant="h6" component="h2">
+              {title}
             </Typography>
+          </Button>
+          <Box className={classes.row}>
+            <Box>
+              <Typography
+                variant="subtitle1"
+                color="textSecondary"
+                component="p"
+              >
+                Release date: {releaseDate}
+              </Typography>
+            </Box>
+            <Box>
+              <UserScore score={score * 10} label={"User score:"}></UserScore>
+            </Box>
           </Box>
-          <Box>
-            <UserScore score={score * 10} label={"User score:"}></UserScore>
-          </Box>
-        </Box>
-        <Collapse in={expanded} timeout="auto" unmountOnExit>
-          <MovieDetails name={title}></MovieDetails>
-        </Collapse>
-      </CardContent>
+        </CardContent>
+      </Box>
+      <Collapse in={expanded} timeout="auto" unmountOnExit>
+        <MovieDetails
+          name={title}
+          movieId={id}
+          onSimilar={onSimilar}
+        ></MovieDetails>
+      </Collapse>
     </Card>
   );
 }

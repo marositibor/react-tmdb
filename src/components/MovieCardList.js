@@ -19,9 +19,8 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function MovieCardList({ movieNodeList }) {
+export default function MovieCardList({ movieNodeList, onSimilar }) {
   const classes = useStyles();
-  console.log(movieNodeList);
   return (
     <React.Fragment>
       <Grid container justify="center" className={classes.container}>
@@ -38,6 +37,8 @@ export default function MovieCardList({ movieNodeList }) {
                 title={movie.name}
                 releaseDate={new Date(movie.releaseDate).toLocaleDateString()}
                 score={movie.score}
+                id={movie.id}
+                onSimilar={onSimilar}
               />
             </Grid>
           ))
