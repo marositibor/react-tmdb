@@ -9,7 +9,7 @@ export default function useSearch(defaultQuery) {
   const createBody = (query) => {
     return JSON.stringify({
       query: `query SearchMovies {  
-                searchMovies(query: "${query}") {
+                searchMovies(query: ${JSON.stringify(query)}) {
                         id
                         name 
                         releaseDate
@@ -38,6 +38,7 @@ export default function useSearch(defaultQuery) {
       setIsLoading(true);
       try {
         const res = await fetch(url, options);
+        console.log(res);
         const json = await res.json();
         setResponse(json);
         setIsLoading(false);
